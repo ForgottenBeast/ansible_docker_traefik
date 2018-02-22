@@ -24,7 +24,7 @@
   tags: traefik_deploy
   file:
     state: touch
-    mode: 600
+    mode: 0600
     name: "{{traefik_files_location}}/acme.json"
 
 - name: "Upload configuration file"

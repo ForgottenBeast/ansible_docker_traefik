@@ -14,7 +14,8 @@ services:
     container_name: traefik
     image: traefik
     restart: always
-    command: --api --docker
+    networks:
+      - proxy_net
     ports:
       - "80:80"
       - "443:443"
