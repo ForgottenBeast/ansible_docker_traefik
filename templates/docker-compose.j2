@@ -1,0 +1,40 @@
+{% macro wpkey(key) %}
+{{ key }}
+{% endmacro %}
+version: "2"
+
+networks:
+  proxy_net:
+    external:
+      name: proxy_net
+
+services:
+
+  traefik:
+    container_name: traefik
+    image: traefik
+    restart: always
+    command: --api --docker
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - {{traefik_files_location}}/acme.json:/acme.json
+      - {{traefik_files_location}}/traefik.toml:/traefik.toml
+
+  
+{% if TOR_HH == True %}
+  torhh:
+    networks:
+      - proxy_net
+    restart: always
+    image: goldy/tor-hidden-service
+    links:
+      - traefik
+    environment:
+      TRAEFIK_KEY: |
+{{ wpkey(tor_hidden_service_private_key) | indent(8,True) }}
+      TRAEFIK_PORTS: 80:80,443:443
+{% endif %}

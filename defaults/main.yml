@@ -1,0 +1,9 @@
+#template vars
+traefik_admin_password: "admin:$apr1$UwpTLrUy$nOwIqv3fkPcr2IR8Vglv60" #htpasswd string mysecurepasswor
+traefik_letsencrypt_email: "someemail@provider.xyz"
+traefik_docker_domain: "docker.localhost"
+
+#deploy vars
+traefik_files_location: "/root/traefik_files"
+TOR_HH: False #create tor hidden services
+tor_hidden_service_private_key:
